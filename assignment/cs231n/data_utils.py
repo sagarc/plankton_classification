@@ -202,7 +202,7 @@ def load_plankton_dataset(path, dtype=np.float32):
       img.shape = (48, 48, 1)
     X_test[i] = img.transpose(2, 0, 1)
   
-  return class_names, X_train, y_train, X_test
+  return class_names, X_train, y_train, X_test, img_files
 
 def load_models(models_dir):
   """
