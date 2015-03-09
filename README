@@ -1,0 +1,15 @@
+Project:
+Image classification on plankton dataset, https://www.kaggle.com/c/datasciencebowl
+
+Plan:
+1) Train own convnet on plankton dataset. 
+  a) Divide the given train dataset in train and validation dataset.
+  b) Train CNN (2-layer, 3-layer, 5-layer) on training dataset and evaluate performace on validation dataset.
+  c) Use various CNN tricks to improve performance of this model on validation dataset.
+  d) Use semantic and domain knowledge if possible.
+2) Get the features (last relu activations) from this convnet and train linear classifier on top of it. See if accuracy is improved or not.
+3) Add more features by running these images through various other neuralNets. (eg: get features (last relu activations) by running alexnet on these images. Train linear classifier with all additional features included.
+
+
+
+
