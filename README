@@ -11,5 +11,7 @@ Plan:
 3) Add more features by running these images through various other neuralNets. (eg: get features (last relu activations) by running alexnet on these images. Train linear classifier with all additional features included.
 
 
-
+Current code structure:
+Open q3.ipynb in assignment folder. This notebook was used as base because of transfer learning being available in this notebook. 
+TODO: I need to remove other notebooks and rename this notebook.
 
