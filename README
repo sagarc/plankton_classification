@@ -9,6 +9,8 @@ Plan:
   d) Use semantic and domain knowledge if possible.
 2) Get the features (last relu activations) from this convnet and train linear classifier on top of it. See if accuracy is improved or not.
 3) Add more features by running these images through various other neuralNets. (eg: get features (last relu activations) by running alexnet on these images. Train linear classifier with all additional features included.
+4) Adverserial example training for this dataset
+5) Multi-class correlation (@romilverma)
 
 
 Current code structure:
