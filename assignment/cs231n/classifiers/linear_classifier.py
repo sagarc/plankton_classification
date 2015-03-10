@@ -147,6 +147,9 @@ def softmax_loss_vectorized(W, X, y, reg):
   p = np.exp(scores)
   p /= np.sum(p, axis = 0)
 
+  y.astype(int)
+  print y
+
   loss_cost = -np.sum(np.log(p[y, range(y.size)])) / num_train
   loss_reg = 0.5 * reg * np.sum(W * W)
   loss = loss_cost + loss_reg
