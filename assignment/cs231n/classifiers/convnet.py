@@ -282,7 +282,7 @@ def init_five_layer_convnet(input_shape=(3, 64, 64), num_classes=100,
 
 def five_layer_convnet(X, model, y=None, reg=0.0, dropout=1.0,
                        extract_features=False, compute_dX=False,
-                       return_probs=False):
+                       return_probs=False, return_loss=False):
   """
   Compute the loss and gradient for a five layer convnet with the architecture
 
@@ -381,6 +381,8 @@ def five_layer_convnet(X, model, y=None, reg=0.0, dropout=1.0,
       return scores
 
   data_loss, dscores = softmax_loss(scores, y)
+  if return_loss:
+    return data_loss
   dd4, dW5, db5 = affine_backward(dscores, cache6)
   da4 = dropout_backward(dd4, cache5)
   da3, dW4, db4 = affine_relu_backward(da4, cache4)
