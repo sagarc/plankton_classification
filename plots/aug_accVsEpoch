@@ -1,0 +1,8 @@
+# Validation accuracy
+#epoch 2-layer_loss 3_layer_loss 5_layer_loss 5_layer_loss+softmax
+0 0.408000 0.446000
+1 0.500000 0.522000
+2 0.519000 0.559000
+3 0.577000 0.564000
+4 0.565000 0.595000
+5 0.594000 0.611000

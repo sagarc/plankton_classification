@@ -73,6 +73,7 @@ class ClassifierTrainer(object):
     loss_history = []
     train_acc_history = []
     val_acc_history = []
+    valid_loss = []
     for it in xrange(num_iters):
       if it % 100 == 0:  print 'starting iteration ', it
 
@@ -158,6 +159,9 @@ class ClassifierTrainer(object):
           scores = loss_function(X_val_slice, model)
           y_pred_val.append(np.argmax(scores, axis=1))
         y_pred_val = np.hstack(y_pred_val)
+        val_cost, val_grads = loss_function(X_val, model, y_val, reg=reg, dropout=dropout)
+        valid_loss.append(val_cost)
+
         val_acc = np.mean(y_pred_val ==  y_val)
         val_acc_history.append(val_acc)
         
@@ -171,13 +175,13 @@ class ClassifierTrainer(object):
 
         # print progress if needed
         if verbose:
-          print ('Finished epoch %d / %d: cost %f, train: %f, val %f, lr %e'
-                 % (epoch, num_epochs, cost, train_acc, val_acc, learning_rate))
+          print ('Finished epoch %d / %d: cost %f, train: %f, val %f, lr %e, val_loss %e'
+                 % (epoch, num_epochs, cost, train_acc, val_acc, learning_rate, val_cost))
 
     if verbose:
       print 'finished optimization. best validation accuracy: %f' % (best_val_acc, )
     # return the best model and the training history statistics
-    return best_model, loss_history, train_acc_history, val_acc_history
+    return best_model, loss_history, train_acc_history, val_acc_history, valid_loss
 
 
 

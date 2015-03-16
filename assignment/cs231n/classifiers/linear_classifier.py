@@ -5,7 +5,7 @@ class LinearClassifier:
   def __init__(self):
     self.W = None
 
-  def train(self, X, y, learning_rate=1e-3, reg=1e-5, num_iters=1500,
+  def train(self, X, y, learning_rate=1e-3, reg=1e-5, num_iters=5000,
             batch_size=100, verbose=False):
     """
     Train this linear classifier using stochastic gradient descent.
@@ -29,6 +29,7 @@ class LinearClassifier:
       # lazily initialize W
       self.W = np.random.randn(num_classes, dim) * 0.001
 
+    print self.W.shape
     # Run stochastic gradient descent to optimize W
     loss_history = []
     for it in xrange(num_iters):
@@ -47,12 +48,12 @@ class LinearClassifier:
       step = -learning_rate * grad
       self.W += step
 
-      if verbose and it % 100 == 0:
+      if verbose and it % 5000 == 0:
         print 'iteration %d / %d: loss %f' % (it, num_iters, loss)
 
     return loss_history
 
-  def predict(self, X):
+  def predict(self, X, get_prob=False):
     """
     Use the trained weights of this linear classifier to predict labels for
     data points.
@@ -67,6 +68,11 @@ class LinearClassifier:
     """
     y_pred = np.zeros(X.shape[1])
     scores = self.W.dot(X)
+    if get_prob:
+      scores -= np.max(scores, axis = 0)
+      p = np.exp(scores)
+      p /= np.sum(p, axis = 0)
+      return p
     y_pred = np.argmax(scores, axis=0) # top scoring class
     return y_pred
   
@@ -147,8 +153,7 @@ def softmax_loss_vectorized(W, X, y, reg):
   p = np.exp(scores)
   p /= np.sum(p, axis = 0)
 
-  y.astype(int)
-  print y
+  y = y.astype(np.int32)
 
   loss_cost = -np.sum(np.log(p[y, range(y.size)])) / num_train
   loss_reg = 0.5 * reg * np.sum(W * W)

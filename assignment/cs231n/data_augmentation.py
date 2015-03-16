@@ -22,6 +22,28 @@ def random_flips(X):
   out = outFlat.reshape(X.shape)
   return out
 
+def random_rotate(X):
+  """
+  Take random 90 degree rotation of images.
+
+  Input:
+  - X: (N, C, H, W) array of image data.
+
+  Output:
+  - An array of the same shape as X, containing a copy of the data in X,
+    but with half the examples rotated by 90 degree.
+  - mask
+  """
+  N, C, H, W = X.shape
+  out = np.zeros_like(X)
+
+  mask = np.random.random(N) < 0.6
+  for n in xrange(N):
+    rot_size = np.random.randint(3)+1
+    for c in xrange(C):
+      out[n][c] = np.rot90(X[n,c],rot_size)
+  return out, mask
+
 
 def random_crops(X, crop_shape):
   """
@@ -65,11 +87,12 @@ def random_contrast(X, scale=(0.8, 1.2)):
   """
   low, high = scale
   N = X.shape[0]
+  mask = np.random.random(N) < 0.1
   out = np.zeros_like(X)
   contrast_scale = np.random.random(N) * (high - low) + low
   Xcontrast = X.reshape(N, -1).T * contrast_scale
   out = Xcontrast.T.reshape(X.shape)
-  return out
+  return out, mask
 
 
 def random_tint(X, scale=(-10, 10)):

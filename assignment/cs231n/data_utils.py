@@ -162,6 +162,8 @@ def load_plankton_dataset(path, dtype=np.float32):
   # Next load training data.
   X_train = []
   y_train = []
+  image_index = 0
+  image_mapping = {}
   for i, class_name in enumerate(class_names):
     if (i + 1) % 20 == 0:
       print 'loading training data for synset %d / %d' % (i + 1, len(class_names))
@@ -174,6 +176,8 @@ def load_plankton_dataset(path, dtype=np.float32):
     X_train_block = np.zeros((num_images, 3, 48, 48), dtype=dtype)
     y_train_block = class_to_label[class_name] * np.ones(num_images, dtype=np.int64)
     for j, img_file in enumerate(filenames):
+      image_mapping[image_index] = img_file
+      image_index+=1
       img_file = os.path.join(path, 'resized_train', class_name, img_file)
       #print img_file
       img = imread(img_file)
@@ -183,6 +187,7 @@ def load_plankton_dataset(path, dtype=np.float32):
       X_train_block[j] = img.transpose(2, 0, 1)
     X_train.append(X_train_block)
     y_train.append(y_train_block)
+    
       
   # We need to concatenate all training data
   X_train = np.concatenate(X_train, axis=0)
@@ -202,7 +207,7 @@ def load_plankton_dataset(path, dtype=np.float32):
       img.shape = (48, 48, 1)
     X_test[i] = img.transpose(2, 0, 1)
   
-  return class_names, X_train, y_train, X_test, img_files
+  return class_names, X_train, y_train, X_test, img_files, image_mapping
 
 def load_models(models_dir):
   """

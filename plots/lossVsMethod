@@ -1,0 +1,7 @@
+#method loss accuracy
+2-layer 2.18
+3-layer 1.88
+5-layer 1.35
+5-layer + softmax 1.31
+5-layer + data_augmentation 1.28 
+5-layer + softmax + bvlcc_features 1.25
